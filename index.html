@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Aplicativo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+
+        .form-wrapper {
+            display: flex;
+            flex-direction: column;
+            width: 90%;
+            max-width: 400px;
+            align-items: center;
+        }
+
+        .form-wrapper img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        .form-wrapper input {
+            padding: 15px;
+            margin: 10px 0;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .form-wrapper input:focus {
+            outline: none;
+            border-color: #007BFF;
+        }
+
+        .form-wrapper button {
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 1rem;
+            background-color: grey; /* Botão desativado inicialmente */
+            color: white;
+            border: none;
+            border-radius: 30px;
+            width: 60%;
+            cursor: not-allowed;
+            text-align: center;
+        }
+
+        .form-wrapper button.active {
+            background-color: black;
+            cursor: pointer;
+        }
+
+        .loading {
+            display: none;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        .loading span {
+            display: inline-block;
+            margin-left: 5px;
+            border: 2px solid black;
+            border-radius: 50%;
+            width: 10px;
+            height: 10px;
+            animation: bounce 0.6s infinite alternate;
+        }
+
+        .loading span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .loading span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes bounce {
+            to {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Responsividade */
+        @media (max-width: 600px) {
+            .form-wrapper input {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="form-wrapper" id="formWrapper">
+            <!-- Imagem com cantos arredondados -->
+            <img src="https://transporte24.com.br/unnamed.jpg.webp" alt="Ícone de transporte">
+
+            <input type="text" id="inputPartida" placeholder="Local de Partida">
+            <input type="text" id="inputChegada" placeholder="Local de Chegada">
+            <button id="raceButton" disabled>Fazer uma corrida</button>
+        </div>
+        <div class="loading" id="loading">
+            Procurando corrida<span>.</span><span>.</span><span>.</span>
+        </div>
+    </div>
+
+    <script>
+        const inputPartida = document.getElementById('inputPartida');
+        const inputChegada = document.getElementById('inputChegada');
+        const raceButton = document.getElementById('raceButton');
+
+        // Função para verificar se ambos os campos estão preenchidos
+        function checkInputs() {
+            if (inputPartida.value.trim() !== '' && inputChegada.value.trim() !== '') {
+                raceButton.disabled = false;
+                raceButton.classList.add('active');
+            } else {
+                raceButton.disabled = true;
+                raceButton.classList.remove('active');
+            }
+        }
+
+        // Adiciona eventos de input para verificar se os campos estão preenchidos
+        inputPartida.addEventListener('input', checkInputs);
+        inputChegada.addEventListener('input', checkInputs);
+
+        // Evento de clique no botão para fazer o loading e redirecionar
+        raceButton.addEventListener('click', function() {
+            // Esconde todos os elementos da tela e exibe apenas o ícone de carregamento
+            document.getElementById('formWrapper').style.display = 'none';
+            document.getElementById('loading').style.display = 'block';
+            
+            // Simula o carregamento de 5 segundos
+            setTimeout(function() {
+                // Obtém o valor do local de partida
+                const localPartida = inputPartida.value.trim();
+                // Redireciona para a página motorista.php passando o local de partida como parâmetro
+                window.location.href = 'motorista.php?local_partida=' + encodeURIComponent(localPartida);
+            }, 5000); // 5 segundos
+        });
+    </script>
+
+<style type="text/css">/* Oculta o bloco em telas com largura menor ou igual a 768px (dispositivos móveis) */
+  @media (max-width: 768px) {
+    .topoMobileLogoCarrinho {
+      display: none;
+    }
+  }
+
+
+</style>
+
+<style type="text/css">/* Oculta o bloco em telas com largura menor ou igual a 768px (dispositivos móveis) */
+  @media (max-width: 768px) {
+    .topoMobileLogoCarrinho {
+      display: none;
+    }
+  }
+
+  /* Oculta o bloco em telas com largura maior que 768px (desktops) */
+  @media (min-width: 769px) {
+    .topoMobileLogoCarrinho {
+      display: none;
+    }
+  }
+</style>
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+<style type="text/css">
+    /* Estilos gerais */
+    body, html {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    /* Estilos específicos para o rodapé */
+    .footer-nav {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 10px;
+        background-color: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+    }
+    
+    .footer-nav a {
+        color: #333;
+        text-decoration: none;
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        flex: 1;
+    }
+    
+    .footer-nav a img {
+        width: 24px;
+        height: 24px;
+        filter: brightness(0);
+    }
+    
+    .footer-nav a .link-text {
+        font-size: 10px;
+        margin-top: 5px;
+    }
+
+    /* Para telas maiores (desktop), o rodapé é centralizado e com layout flex */
+    @media (min-width: 1024px) {
+        .footer-nav {
+            bottom: 20px;
+            left: 50%;
+            width: auto;
+            transform: translateX(-50%);
+            border-radius: 50px;
+        }
+        
+        .footer-nav a {
+            margin: 0 15px;
+            flex: none;
+        }
+    }
+</style>
+
+<!-- Conteúdo do seu HTML existente -->
+<header><!-- Seu cabeçalho aqui --></header>
+
+<main><!-- Seu conteúdo principal aqui --></main>
+
+<footer><!-- Seu rodapé existente aqui --></footer>
+
+<!-- Inclusão do rodapé com os ícones -->
+<div class="footer-nav">
+    <a class="nav-link" href="https://transporte24.com.br/index.php" target="_self">
+        <img src="https://cdn-icons-png.flaticon.com/128/6317/6317523.png" alt="botão home" title="botão home">
+        <span class="link-text">Início</span>
+    </a>
+    <a class="nav-link" href="https://transporte24.lojavirtual.com.br/" target="_self">
+        <img src="https://cdn-icons-png.flaticon.com/128/8265/8265284.png" alt="cardápio" title="Opções">
+        <span class="link-text">Opções</span>
+    </a>
+    <a class="nav-link" href="https://transporte24.lojavirtual.com.br/checkout-carrinho" target="_self">
+        <img src="https://cdn.icon-icons.com/icons2/2622/PNG/96/shop_cart_icon_157457.png" alt="ícone Loja, carrinho" title="Carrinho">
+        <span class="link-text">Carrinho</span>
+    </a>
+    <a class="nav-link" href="https://transporte24.lojavirtual.com.br//login" target="_self">
+        <img src="https://cdn.icon-icons.com/icons2/2574/PNG/96/profile_picture_user_icon_153847.png" alt="ícone Perfil, utilizador" title="Perfil">
+        <span class="link-text">Perfil</span>
+    </a>
+</div>
+
